@@ -677,6 +677,7 @@ tr.amrap .set-label {
 // ── Constants ──
 const LIFTS = ['press', 'deadlift', 'bench', 'squat'];
 const LIFT_LABELS = { press: 'Military Press', deadlift: 'Deadlift', bench: 'Bench Press', squat: 'Squat' };
+const LIFT_SHORT = { press: 'Press', deadlift: 'DL', bench: 'Bench', squat: 'Squat' };
 const UPPER = new Set(['press', 'bench']);
 
 // Option 1 percentages (Wendler's recommendation)
@@ -737,8 +738,8 @@ function getSchedule(variant, weekIndex) {
         ];
       } else {
         return [
-          { day: 'Day 1', lifts: ['squat', 'bench'] },
-          { day: 'Day 2', lifts: ['deadlift', 'press'] },
+          { day: 'Day 1', lifts: ['deadlift', 'press'] },
+          { day: 'Day 2', lifts: ['squat', 'bench'] },
         ];
       }
 
@@ -779,8 +780,10 @@ const DEFAULT_STATE = {
   currentWeek: 0,  // 0-3
   // amrapLog[cycle][weekIndex][liftName] = { weight, reps, estimatedMax }
   amrapLog: {},
-  // prHistory[liftName] = [{ date, weight, reps, estimatedMax, cycle }]
+  // prHistory[liftName] = [{ date, weight, reps, estimatedMax, cycle, week }]
   prHistory: { squat: [], bench: [], press: [], deadlift: [] },
+  // tmHistory[cycle] = { squat, bench, press, deadlift } — snapshot before progression
+  tmHistory: {},
 };
 
 let state = loadState();
@@ -833,7 +836,7 @@ function renderCycle() {
   // Training maxes display
   const tmEl = document.getElementById('tm-display');
   tmEl.innerHTML = LIFTS.map(l =>
-    `<span class="tm-item"><strong>${LIFT_LABELS[l].split(' ')[0]}</strong> ${state.trainingMaxes[l]}</span>`
+    `<span class="tm-item"><strong>${LIFT_SHORT[l]}</strong> ${state.trainingMaxes[l]}</span>`
   ).join('');
 
   // Week tabs
@@ -940,6 +943,7 @@ function logAmrap(key, lift, weight, minReps) {
     reps,
     estimatedMax: est,
     cycle: state.cycle,
+    week: state.currentWeek,
   };
   state.prHistory[lift].push(entry);
 
@@ -954,7 +958,7 @@ function clearAmrap(key, lift) {
     // Remove matching PR history entry
     const history = state.prHistory[lift];
     const idx = history.findIndex(e =>
-      e.cycle === state.cycle && e.weight === logged.weight && e.reps === logged.reps
+      e.cycle === state.cycle && e.week === state.currentWeek && e.weight === logged.weight && e.reps === logged.reps
     );
     if (idx > -1) history.splice(idx, 1);
   }
@@ -1023,6 +1027,8 @@ function renderSettings() {
 
 // ── Progression ──
 function completeCycle() {
+  // Snapshot current TMs before progression
+  state.tmHistory[state.cycle] = { ...state.trainingMaxes };
   // Increment training maxes: +5 upper, +10 lower
   for (const lift of LIFTS) {
     const inc = UPPER.has(lift) ? 5 : 10;
@@ -1036,12 +1042,17 @@ function completeCycle() {
 
 function prevCycle() {
   if (state.cycle <= 1) return;
-  // Reverse the progression
-  for (const lift of LIFTS) {
-    const inc = UPPER.has(lift) ? 5 : 10;
-    state.trainingMaxes[lift] -= inc;
-  }
   state.cycle--;
+  // Restore TMs from snapshot if available, otherwise subtract
+  const snapshot = state.tmHistory[state.cycle];
+  if (snapshot) {
+    state.trainingMaxes = { ...snapshot };
+  } else {
+    for (const lift of LIFTS) {
+      const inc = UPPER.has(lift) ? 5 : 10;
+      state.trainingMaxes[lift] = Math.max(0, state.trainingMaxes[lift] - inc);
+    }
+  }
   state.currentWeek = 0;
   saveState();
   renderCycle();
@@ -1130,10 +1141,10 @@ document.getElementById('btn-prev-cycle').addEventListener('click', () => {
 
 // Settings: save TM
 document.getElementById('btn-save-tm').addEventListener('click', () => {
-  state.trainingMaxes.squat = parseInt(document.getElementById('tm-squat').value, 10) || state.trainingMaxes.squat;
-  state.trainingMaxes.bench = parseInt(document.getElementById('tm-bench').value, 10) || state.trainingMaxes.bench;
-  state.trainingMaxes.press = parseInt(document.getElementById('tm-press').value, 10) || state.trainingMaxes.press;
-  state.trainingMaxes.deadlift = parseInt(document.getElementById('tm-deadlift').value, 10) || state.trainingMaxes.deadlift;
+  state.trainingMaxes.squat = Math.max(0, parseInt(document.getElementById('tm-squat').value, 10)) || state.trainingMaxes.squat;
+  state.trainingMaxes.bench = Math.max(0, parseInt(document.getElementById('tm-bench').value, 10)) || state.trainingMaxes.bench;
+  state.trainingMaxes.press = Math.max(0, parseInt(document.getElementById('tm-press').value, 10)) || state.trainingMaxes.press;
+  state.trainingMaxes.deadlift = Math.max(0, parseInt(document.getElementById('tm-deadlift').value, 10)) || state.trainingMaxes.deadlift;
   saveState();
   alert('Training maxes updated.');
 });
