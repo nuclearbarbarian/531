@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5/3/1 Training Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ── Penney Design System Tokens ── */
+:root {
+  --color-ink: #1A1A1A;
+  --color-newsprint: #F5F2E8;
+  --color-paper: #FDFCF9;
+  --color-warm-gray: #9C9788;
+  --color-red: #8B2B2B;
+  --color-blue: #2B4B6F;
+  --color-yellow: #C4A035;
+  --color-green: #3D5C3D;
+  --color-gray-90: #2D2D2D;
+  --color-gray-70: #5C5C5C;
+  --color-gray-50: #8A8A8A;
+  --color-gray-30: #B8B8B8;
+  --color-gray-15: #DCDCDC;
+  --font-serif: 'Source Serif 4', 'Charter', 'Georgia', serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+  --space-unit: 6px;
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 18px;
+  --space-lg: 24px;
+  --space-xl: 36px;
+  --space-2xl: 48px;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-newsprint);
+  min-height: 100vh;
+}
+
+/* ── Layout ── */
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-lg) var(--space-2xl);
+}
+
+/* ── Header ── */
+.app-header {
+  border-top: 2px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
+  padding: var(--space-sm) 0;
+  margin-bottom: var(--space-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.app-subtitle {
+  font-size: 12px;
+  color: var(--color-warm-gray);
+  font-family: var(--font-mono);
+}
+
+/* ── Typography ── */
+h2 {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+  line-height: 1.3;
+}
+
+p { margin-bottom: var(--space-sm); }
+
+/* ── Sections ── */
+.section {
+  margin-bottom: var(--space-xl);
+}
+
+.section-rule {
+  border: none;
+  border-top: 1px solid var(--color-gray-50);
+  margin: var(--space-xl) 0;
+}
+
+/* ── Forms ── */
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-xs);
+  color: var(--color-gray-70);
+}
+
+input[type="number"], select {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-gray-50);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  width: 100%;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="number"]:focus, select:focus {
+  outline: none;
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 1px var(--color-blue);
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231A1A1A' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Buttons ── */
+button {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  padding: var(--space-sm) var(--space-lg);
+  border: 2px solid var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-newsprint);
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.15s, color 0.15s;
+}
+
+button:hover {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+button.secondary {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 1px solid var(--color-ink);
+}
+
+button.secondary:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+button.small {
+  font-size: 12px;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+button.danger {
+  border-color: var(--color-red);
+  background: var(--color-red);
+  color: var(--color-paper);
+}
+
+button.danger:hover {
+  background: var(--color-paper);
+  color: var(--color-red);
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  margin-bottom: var(--space-sm);
+}
+
+th {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 2px solid var(--color-ink);
+  color: var(--color-gray-70);
+}
+
+td {
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--color-gray-15);
+}
+
+td.num, th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+tr.amrap td {
+  font-weight: 700;
+}
+
+tr.amrap .set-label {
+  color: var(--color-red);
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-gray-30);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-gray-15);
+}
+
+.card-header h3 {
+  margin-bottom: 0;
+}
+
+.card-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-warm-gray);
+}
+
+/* ── Week tabs ── */
+.week-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--color-ink);
+}
+
+.week-tab {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 700;
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--color-gray-30);
+  border-bottom: none;
+  background: var(--color-newsprint);
+  color: var(--color-gray-50);
+  cursor: pointer;
+  margin-bottom: -2px;
+  letter-spacing: 0.3px;
+}
+
+.week-tab:hover {
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+.week-tab.active {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+  border-bottom: 2px solid var(--color-paper);
+}
+
+/* ── Day columns ── */
+.day-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.day-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.day-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.day-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.day-grid.cols-1 { grid-template-columns: 1fr; max-width: 360px; }
+
+/* ── Workout day card ── */
+.day-card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-gray-30);
+  padding: var(--space-sm);
+}
+
+.day-card h4 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-warm-gray);
+  margin-bottom: 2px;
+}
+
+.day-card .lift-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.day-card table {
+  font-size: 12px;
+}
+
+.day-card th {
+  font-size: 10px;
+  padding: 3px var(--space-xs);
+}
+
+.day-card td {
+  padding: 3px var(--space-xs);
+}
+
+/* ── AMRAP input ── */
+.amrap-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.amrap-input input {
+  width: 52px;
+  text-align: center;
+  padding: 2px 4px;
+  font-size: 13px;
+}
+
+.amrap-input .reps-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-warm-gray);
+}
+
+/* ── PR display ── */
+.pr-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-red);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.estimated-max {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-blue);
+  margin-top: 2px;
+}
+
+/* ── PR History ── */
+.pr-table th { font-size: 11px; }
+.pr-table td { font-size: 12px; }
+
+/* ── Nav bar ── */
+.nav-bar {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-gray-30);
+  padding-bottom: var(--space-sm);
+}
+
+.nav-btn {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 400;
+  padding: var(--space-xs) var(--space-sm);
+  border: none;
+  background: none;
+  color: var(--color-gray-50);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -13px;
+}
+
+.nav-btn:hover {
+  color: var(--color-ink);
+  background: none;
+}
+
+.nav-btn.active {
+  color: var(--color-ink);
+  font-weight: 700;
+  border-bottom-color: var(--color-ink);
+  background: none;
+}
+
+/* ── Schedule selector ── */
+.schedule-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.schedule-option {
+  background: var(--color-paper);
+  border: 1px solid var(--color-gray-30);
+  padding: var(--space-sm);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 400;
+  transition: border-color 0.15s;
+}
+
+.schedule-option:hover {
+  border-color: var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.schedule-option.selected {
+  border: 2px solid var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.schedule-option .opt-title {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.schedule-option .opt-desc {
+  font-size: 12px;
+  color: var(--color-gray-70);
+  display: block;
+}
+
+/* ── Cycle info bar ── */
+.cycle-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-warm-gray);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--color-gray-15);
+}
+
+.cycle-bar .training-maxes {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.cycle-bar .tm-item strong {
+  color: var(--color-ink);
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .app { padding: var(--space-sm); }
+  .form-row { grid-template-columns: 1fr; }
+  .day-grid.cols-4, .day-grid.cols-3 { grid-template-columns: 1fr; }
+  .day-grid.cols-2 { grid-template-columns: 1fr; }
+  .schedule-options { grid-template-columns: 1fr; }
+  .cycle-bar { flex-direction: column; gap: var(--space-xs); }
+  .cycle-bar .training-maxes { flex-wrap: wrap; }
+}
+
+/* ── Screen visibility ── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── Utility ── */
+.text-center { text-align: center; }
+.mt-lg { margin-top: var(--space-lg); }
+.mt-xl { margin-top: var(--space-xl); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.flex-between { display: flex; justify-content: space-between; align-items: baseline; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Header -->
+  <header class="app-header">
+    <span class="app-title">5/3/1</span>
+    <span class="app-subtitle">Training Log</span>
+  </header>
+
+  <!-- ═══════════ SETUP SCREEN ═══════════ -->
+  <div id="setup-screen" class="screen active">
+    <h2>Setup</h2>
+    <p>Enter your current one-rep maxes. The program will calculate your training max (90%) automatically.</p>
+
+    <div class="form-row">
+      <div>
+        <label for="max-squat">Squat 1RM</label>
+        <input type="number" id="max-squat" min="0" step="5" placeholder="e.g. 315">
+      </div>
+      <div>
+        <label for="max-bench">Bench Press 1RM</label>
+        <input type="number" id="max-bench" min="0" step="5" placeholder="e.g. 250">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="max-press">Military Press 1RM</label>
+        <input type="number" id="max-press" min="0" step="5" placeholder="e.g. 170">
+      </div>
+      <div>
+        <label for="max-deadlift">Deadlift 1RM</label>
+        <input type="number" id="max-deadlift" min="0" step="5" placeholder="e.g. 350">
+      </div>
+    </div>
+
+    <hr class="section-rule">
+
+    <h2>Schedule</h2>
+    <p>How many days per week will you train?</p>
+
+    <div class="schedule-options">
+      <button type="button" class="schedule-option selected" data-schedule="4">
+        <span class="opt-title">4 Days / Week</span>
+        <span class="opt-desc">One lift per day. Standard 5/3/1.</span>
+      </button>
+      <button type="button" class="schedule-option" data-schedule="3">
+        <span class="opt-title">3 Days / Week</span>
+        <span class="opt-desc">Rotating lifts. 5-week cycle.</span>
+      </button>
+      <button type="button" class="schedule-option" data-schedule="2">
+        <span class="opt-title">2 Days / Week</span>
+        <span class="opt-desc">Two lifts per session, alternating.</span>
+      </button>
+      <button type="button" class="schedule-option" data-schedule="1">
+        <span class="opt-title">1 Day / Week</span>
+        <span class="opt-desc">All lifts across alternating weeks.</span>
+      </button>
+    </div>
+
+    <div class="mt-lg">
+      <button id="btn-start" type="button">Begin Program</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ TRAINING SCREEN ═══════════ -->
+  <div id="training-screen" class="screen">
+    <!-- Nav -->
+    <nav class="nav-bar">
+      <button class="nav-btn active" data-view="cycle">Cycle</button>
+      <button class="nav-btn" data-view="history">PR History</button>
+      <button class="nav-btn" data-view="settings">Settings</button>
+    </nav>
+
+    <!-- ── Cycle View ── -->
+    <div id="view-cycle" class="view active">
+      <div class="cycle-bar">
+        <span id="cycle-label">Cycle 1</span>
+        <div class="training-maxes" id="tm-display"></div>
+      </div>
+
+      <div class="week-tabs" id="week-tabs"></div>
+
+      <div id="week-content"></div>
+
+      <div class="mt-lg flex-between">
+        <button id="btn-prev-cycle" class="secondary small" style="visibility:hidden;">Previous Cycle</button>
+        <button id="btn-next-cycle" class="secondary small">Complete Cycle &amp; Progress</button>
+      </div>
+    </div>
+
+    <!-- ── PR History View ── -->
+    <div id="view-history" class="view" style="display:none;">
+      <h2>Personal Records</h2>
+      <p>Estimated 1RM from your AMRAP sets, using Wendler's formula.</p>
+      <div id="pr-content"></div>
+    </div>
+
+    <!-- ── Settings View ── -->
+    <div id="view-settings" class="view" style="display:none;">
+      <h2>Settings</h2>
+
+      <div class="card">
+        <h3>Training Maxes</h3>
+        <p>Current training maxes (90% of your 1RM). Edit to override.</p>
+        <div class="form-row">
+          <div>
+            <label for="tm-squat">Squat TM</label>
+            <input type="number" id="tm-squat" min="0" step="5">
+          </div>
+          <div>
+            <label for="tm-bench">Bench TM</label>
+            <input type="number" id="tm-bench" min="0" step="5">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="tm-press">Press TM</label>
+            <input type="number" id="tm-press" min="0" step="5">
+          </div>
+          <div>
+            <label for="tm-deadlift">Deadlift TM</label>
+            <input type="number" id="tm-deadlift" min="0" step="5">
+          </div>
+        </div>
+        <button id="btn-save-tm" class="secondary small">Update Training Maxes</button>
+      </div>
+
+      <div class="card">
+        <h3>Schedule</h3>
+        <div class="form-group">
+          <label for="setting-schedule">Days Per Week</label>
+          <select id="setting-schedule">
+            <option value="4">4 days / week</option>
+            <option value="3">3 days / week</option>
+            <option value="2">2 days / week</option>
+            <option value="1">1 day / week</option>
+          </select>
+        </div>
+        <button id="btn-save-schedule" class="secondary small">Update Schedule</button>
+      </div>
+
+      <div class="card">
+        <h3>Stall &amp; Reset</h3>
+        <p>If you can't hit prescribed reps on a lift, take 90% of your current training max and restart.</p>
+        <div class="form-row">
+          <div><button class="secondary small" data-reset="squat">Reset Squat</button></div>
+          <div><button class="secondary small" data-reset="bench">Reset Bench</button></div>
+        </div>
+        <div class="form-row">
+          <div><button class="secondary small" data-reset="press">Reset Press</button></div>
+          <div><button class="secondary small" data-reset="deadlift">Reset Deadlift</button></div>
+        </div>
+      </div>
+
+      <div class="card mt-lg">
+        <h3>Reset Everything</h3>
+        <p>Clear all data and start over.</p>
+        <button id="btn-reset-all" class="danger small">Reset All Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   5/3/1 TRAINING LOG — Core Engine
+   ═══════════════════════════════════════════════════════════ */
+
+// ── Constants ──
+const LIFTS = ['press', 'deadlift', 'bench', 'squat'];
+const LIFT_LABELS = { press: 'Military Press', deadlift: 'Deadlift', bench: 'Bench Press', squat: 'Squat' };
+const UPPER = new Set(['press', 'bench']);
+
+// Option 1 percentages (Wendler's recommendation)
+const WEEK_SCHEMES = [
+  { label: 'Week 1 — 3×5',   tag: '5s',    sets: [{ pct: 0.65, reps: 5 }, { pct: 0.75, reps: 5 }, { pct: 0.85, reps: 5, amrap: true }] },
+  { label: 'Week 2 — 3×3',   tag: '3s',    sets: [{ pct: 0.70, reps: 3 }, { pct: 0.80, reps: 3 }, { pct: 0.90, reps: 3, amrap: true }] },
+  { label: 'Week 3 — 5/3/1', tag: '5/3/1', sets: [{ pct: 0.75, reps: 5 }, { pct: 0.85, reps: 3 }, { pct: 0.95, reps: 1, amrap: true }] },
+  { label: 'Week 4 — Deload', tag: 'DL',    sets: [{ pct: 0.40, reps: 5 }, { pct: 0.50, reps: 5 }, { pct: 0.60, reps: 5 }] },
+];
+
+const WARMUP = [
+  { pct: 0.40, reps: 5 },
+  { pct: 0.50, reps: 5 },
+  { pct: 0.60, reps: 3 },
+];
+
+// ── Schedule Templates ──
+// 4-day: each week has 4 sessions, one lift each
+// 3-day: rotating across weeks per the book (p.61)
+// 2-day: two lifts per session, alternating weeks
+// 1-day: all four lifts across alternating weeks
+
+function getSchedule(variant, weekIndex) {
+  // weekIndex is 0-3 (weeks within a 4-week cycle)
+  switch (variant) {
+    case 4:
+      // Standard: Day1=Press, Day2=Deadlift, Day3=Bench, Day4=Squat
+      return [
+        { day: 'Day 1', lifts: ['press'] },
+        { day: 'Day 2', lifts: ['deadlift'] },
+        { day: 'Day 3', lifts: ['bench'] },
+        { day: 'Day 4', lifts: ['squat'] },
+      ];
+
+    case 3: {
+      // Rotating 3-day schedule from the book (p.61)
+      // The book uses a 5-week cycle with rotating lifts:
+      // W1: Press/DL/Bench, W2: Squat/Press/DL, W3: Bench/Squat/Press, W4: DL/Bench/Squat
+      // W5 (deload): combined sessions
+      // We map the 4-week percentage cycle onto the rotating lift order.
+      const rotations = [
+        [['press'], ['deadlift'], ['bench']],
+        [['squat'], ['press'], ['deadlift']],
+        [['bench'], ['squat'], ['press']],
+        [['deadlift'], ['bench'], ['squat']],
+      ];
+      const days = ['Monday', 'Wednesday', 'Friday'];
+      const rot = rotations[weekIndex];
+      return rot.map((lifts, i) => ({ day: days[i], lifts }));
+    }
+
+    case 2:
+      // Two lifts per session, alternating weeks
+      if (weekIndex % 2 === 0) {
+        return [
+          { day: 'Day 1', lifts: ['squat', 'bench'] },
+          { day: 'Day 2', lifts: ['deadlift', 'press'] },
+        ];
+      } else {
+        return [
+          { day: 'Day 1', lifts: ['squat', 'bench'] },
+          { day: 'Day 2', lifts: ['deadlift', 'press'] },
+        ];
+      }
+
+    case 1:
+      // Alternating weeks: Week A = Squat+Bench, Week B = Deadlift+Press
+      if (weekIndex % 2 === 0) {
+        return [{ day: 'Session', lifts: ['squat', 'bench'] }];
+      } else {
+        return [{ day: 'Session', lifts: ['deadlift', 'press'] }];
+      }
+
+    default:
+      return getSchedule(4, weekIndex);
+  }
+}
+
+// ── Math ──
+function roundTo5(n) {
+  return Math.ceil(n / 5) * 5;
+}
+
+function calcWeight(trainingMax, pct) {
+  return roundTo5(trainingMax * pct);
+}
+
+function estimatedMax(weight, reps) {
+  if (reps <= 0) return 0;
+  if (reps === 1) return weight;
+  return Math.round(weight * reps * 0.0333 + weight);
+}
+
+// ── State ──
+const DEFAULT_STATE = {
+  maxes: { squat: 0, bench: 0, press: 0, deadlift: 0 },         // actual 1RMs
+  trainingMaxes: { squat: 0, bench: 0, press: 0, deadlift: 0 },  // 90% of 1RM
+  schedule: 4,
+  cycle: 1,
+  currentWeek: 0,  // 0-3
+  // amrapLog[cycle][weekIndex][liftName] = { weight, reps, estimatedMax }
+  amrapLog: {},
+  // prHistory[liftName] = [{ date, weight, reps, estimatedMax, cycle }]
+  prHistory: { squat: [], bench: [], press: [], deadlift: [] },
+};
+
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('531_state');
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
+
+function saveState() {
+  localStorage.setItem('531_state', JSON.stringify(state));
+}
+
+// ── Lift week index tracking for 3-day schedule ──
+// In the 3-day rotating schedule, each lift appears once per week but in different slots.
+// We need to know which percentage week a given lift is on.
+// For simplicity: all lifts in a given week use the same week's percentages.
+// This matches the book's approach.
+
+function getLiftWeekScheme(weekIndex) {
+  return WEEK_SCHEMES[weekIndex];
+}
+
+// ── Rendering ──
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showView(name) {
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.view === name);
+  });
+  document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+  document.getElementById('view-' + name).style.display = 'block';
+
+  if (name === 'cycle') renderCycle();
+  if (name === 'history') renderHistory();
+  if (name === 'settings') renderSettings();
+}
+
+function renderCycle() {
+  // Cycle label
+  document.getElementById('cycle-label').textContent = 'Cycle ' + state.cycle;
+
+  // Training maxes display
+  const tmEl = document.getElementById('tm-display');
+  tmEl.innerHTML = LIFTS.map(l =>
+    `<span class="tm-item"><strong>${LIFT_LABELS[l].split(' ')[0]}</strong> ${state.trainingMaxes[l]}</span>`
+  ).join('');
+
+  // Week tabs
+  const tabsEl = document.getElementById('week-tabs');
+  tabsEl.innerHTML = WEEK_SCHEMES.map((w, i) =>
+    `<button class="week-tab ${i === state.currentWeek ? 'active' : ''}" data-week="${i}">${w.tag}</button>`
+  ).join('');
+
+  // Prev cycle button visibility
+  document.getElementById('btn-prev-cycle').style.visibility = state.cycle > 1 ? 'visible' : 'hidden';
+
+  renderWeekContent();
+}
+
+function renderWeekContent() {
+  const weekIndex = state.currentWeek;
+  const scheme = getLiftWeekScheme(weekIndex);
+  const schedule = getSchedule(state.schedule, weekIndex);
+  const cols = schedule.length;
+
+  const container = document.getElementById('week-content');
+  const colClass = cols >= 4 ? 'cols-4' : cols === 3 ? 'cols-3' : cols === 2 ? 'cols-2' : 'cols-1';
+
+  let html = `<div class="day-grid ${colClass}">`;
+
+  for (const session of schedule) {
+    for (const lift of session.lifts) {
+      const tm = state.trainingMaxes[lift];
+      const amrapKey = `${state.cycle}-${weekIndex}-${lift}`;
+      const logged = state.amrapLog[amrapKey];
+
+      html += `<div class="day-card">`;
+      html += `<h4>${session.day}</h4>`;
+      html += `<div class="lift-name">${LIFT_LABELS[lift]}</div>`;
+
+      // Warm-up sets
+      html += `<table><thead><tr><th>Set</th><th class="num">Weight</th><th class="num">Reps</th></tr></thead><tbody>`;
+
+      // Only show warm-up if not deload
+      if (weekIndex < 3) {
+        for (const wu of WARMUP) {
+          const w = calcWeight(tm, wu.pct);
+          html += `<tr><td style="color:var(--color-warm-gray)">W</td><td class="num" style="color:var(--color-warm-gray)">${w}</td><td class="num" style="color:var(--color-warm-gray)">${wu.reps}</td></tr>`;
+        }
+      }
+
+      // Work sets
+      for (let i = 0; i < scheme.sets.length; i++) {
+        const s = scheme.sets[i];
+        const w = calcWeight(tm, s.pct);
+        const isAmrap = !!s.amrap;
+        const rowClass = isAmrap ? 'amrap' : '';
+        const repsLabel = isAmrap ? `${s.reps}+` : `${s.reps}`;
+        const setLabel = isAmrap ? `<span class="set-label">${i + 1}</span>` : `${i + 1}`;
+
+        html += `<tr class="${rowClass}"><td>${setLabel}</td><td class="num">${w}</td><td class="num">${repsLabel}</td></tr>`;
+      }
+
+      html += `</tbody></table>`;
+
+      // AMRAP input (if this week has an AMRAP set)
+      const hasAmrap = scheme.sets.some(s => s.amrap);
+      if (hasAmrap) {
+        const amrapSet = scheme.sets.find(s => s.amrap);
+        const amrapWeight = calcWeight(tm, amrapSet.pct);
+
+        if (logged) {
+          const isPR = checkIfPR(lift, logged.estimatedMax);
+          html += `<div class="estimated-max" style="margin-top:var(--space-xs);">`;
+          html += `${amrapWeight} × ${logged.reps} reps`;
+          html += `<br>Est. 1RM: <strong>${logged.estimatedMax}</strong>`;
+          if (isPR) html += ` <span class="pr-badge">PR</span>`;
+          html += `</div>`;
+          html += `<div style="margin-top:4px;"><button class="secondary small" onclick="clearAmrap('${amrapKey}', '${lift}')">Edit</button></div>`;
+        } else {
+          html += `<div class="amrap-input" style="margin-top:var(--space-xs);">`;
+          html += `<input type="number" id="amrap-${amrapKey}" min="0" step="1" placeholder="${amrapSet.reps}">`;
+          html += `<span class="reps-label">reps</span>`;
+          html += `<button class="small" onclick="logAmrap('${amrapKey}', '${lift}', ${amrapWeight}, ${amrapSet.reps})">Log</button>`;
+          html += `</div>`;
+        }
+      }
+
+      html += `</div>`;
+    }
+  }
+
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
+function logAmrap(key, lift, weight, minReps) {
+  const input = document.getElementById('amrap-' + key);
+  const reps = parseInt(input.value, 10);
+  if (!reps || reps < 1) return;
+
+  const est = estimatedMax(weight, reps);
+  state.amrapLog[key] = { weight, reps, estimatedMax: est };
+
+  // Add to PR history
+  const entry = {
+    date: new Date().toISOString().slice(0, 10),
+    weight,
+    reps,
+    estimatedMax: est,
+    cycle: state.cycle,
+  };
+  state.prHistory[lift].push(entry);
+
+  saveState();
+  renderWeekContent();
+}
+
+function clearAmrap(key, lift) {
+  // Remove the log entry
+  const logged = state.amrapLog[key];
+  if (logged) {
+    // Remove matching PR history entry
+    const history = state.prHistory[lift];
+    const idx = history.findIndex(e =>
+      e.cycle === state.cycle && e.weight === logged.weight && e.reps === logged.reps
+    );
+    if (idx > -1) history.splice(idx, 1);
+  }
+  delete state.amrapLog[key];
+  saveState();
+  renderWeekContent();
+}
+
+function checkIfPR(lift, est) {
+  const history = state.prHistory[lift];
+  if (history.length <= 1) return true;
+  const prev = history.slice(0, -1);
+  const prevBest = Math.max(...prev.map(e => e.estimatedMax));
+  return est > prevBest;
+}
+
+function renderHistory() {
+  const container = document.getElementById('pr-content');
+  let html = '';
+
+  for (const lift of LIFTS) {
+    const history = state.prHistory[lift];
+    html += `<div class="card">`;
+    html += `<div class="card-header"><h3>${LIFT_LABELS[lift]}</h3>`;
+    if (history.length > 0) {
+      const best = Math.max(...history.map(e => e.estimatedMax));
+      html += `<span class="card-meta">Best: ${best}</span>`;
+    }
+    html += `</div>`;
+
+    if (history.length === 0) {
+      html += `<p style="color:var(--color-warm-gray);font-size:13px;">No records yet.</p>`;
+    } else {
+      html += `<table class="pr-table"><thead><tr>`;
+      html += `<th>Date</th><th>Cycle</th><th class="num">Weight</th><th class="num">Reps</th><th class="num">Est. 1RM</th>`;
+      html += `</tr></thead><tbody>`;
+
+      const best = Math.max(...history.map(e => e.estimatedMax));
+      // Show most recent first
+      const sorted = [...history].reverse();
+      for (const e of sorted) {
+        const prMark = e.estimatedMax === best ? ' <span class="pr-badge">Best</span>' : '';
+        html += `<tr>`;
+        html += `<td>${e.date}</td>`;
+        html += `<td class="num">${e.cycle}</td>`;
+        html += `<td class="num">${e.weight}</td>`;
+        html += `<td class="num">${e.reps}</td>`;
+        html += `<td class="num">${e.estimatedMax}${prMark}</td>`;
+        html += `</tr>`;
+      }
+      html += `</tbody></table>`;
+    }
+    html += `</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function renderSettings() {
+  document.getElementById('tm-squat').value = state.trainingMaxes.squat;
+  document.getElementById('tm-bench').value = state.trainingMaxes.bench;
+  document.getElementById('tm-press').value = state.trainingMaxes.press;
+  document.getElementById('tm-deadlift').value = state.trainingMaxes.deadlift;
+  document.getElementById('setting-schedule').value = state.schedule;
+}
+
+// ── Progression ──
+function completeCycle() {
+  // Increment training maxes: +5 upper, +10 lower
+  for (const lift of LIFTS) {
+    const inc = UPPER.has(lift) ? 5 : 10;
+    state.trainingMaxes[lift] += inc;
+  }
+  state.cycle++;
+  state.currentWeek = 0;
+  saveState();
+  renderCycle();
+}
+
+function prevCycle() {
+  if (state.cycle <= 1) return;
+  // Reverse the progression
+  for (const lift of LIFTS) {
+    const inc = UPPER.has(lift) ? 5 : 10;
+    state.trainingMaxes[lift] -= inc;
+  }
+  state.cycle--;
+  state.currentWeek = 0;
+  saveState();
+  renderCycle();
+}
+
+// ── Reset a single lift (stall protocol) ──
+function resetLift(lift) {
+  state.trainingMaxes[lift] = roundTo5(state.trainingMaxes[lift] * 0.9);
+  saveState();
+  renderCycle();
+  if (document.getElementById('view-settings').style.display !== 'none') {
+    renderSettings();
+  }
+}
+
+// ── Event Handlers ──
+
+// Setup screen: schedule selector
+document.querySelectorAll('.schedule-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.schedule-option').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+});
+
+// Begin program
+document.getElementById('btn-start').addEventListener('click', () => {
+  const squat = parseInt(document.getElementById('max-squat').value, 10);
+  const bench = parseInt(document.getElementById('max-bench').value, 10);
+  const press = parseInt(document.getElementById('max-press').value, 10);
+  const deadlift = parseInt(document.getElementById('max-deadlift').value, 10);
+
+  if (!squat || !bench || !press || !deadlift) {
+    alert('Enter all four maxes.');
+    return;
+  }
+
+  const selected = document.querySelector('.schedule-option.selected');
+  const schedule = parseInt(selected.dataset.schedule, 10);
+
+  state.maxes = { squat, bench, press, deadlift };
+  state.trainingMaxes = {
+    squat: roundTo5(squat * 0.9),
+    bench: roundTo5(bench * 0.9),
+    press: roundTo5(press * 0.9),
+    deadlift: roundTo5(deadlift * 0.9),
+  };
+  state.schedule = schedule;
+  state.cycle = 1;
+  state.currentWeek = 0;
+  state.amrapLog = {};
+  state.prHistory = { squat: [], bench: [], press: [], deadlift: [] };
+
+  saveState();
+  showScreen('training-screen');
+  showView('cycle');
+});
+
+// Nav bar
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => showView(btn.dataset.view));
+});
+
+// Week tabs (delegated)
+document.getElementById('week-tabs').addEventListener('click', (e) => {
+  const tab = e.target.closest('.week-tab');
+  if (!tab) return;
+  state.currentWeek = parseInt(tab.dataset.week, 10);
+  saveState();
+  renderCycle();
+});
+
+// Complete cycle
+document.getElementById('btn-next-cycle').addEventListener('click', () => {
+  if (confirm('Complete this cycle and progress? Training maxes will increase (+5 upper, +10 lower).')) {
+    completeCycle();
+  }
+});
+
+// Previous cycle
+document.getElementById('btn-prev-cycle').addEventListener('click', () => {
+  if (confirm('Go back to previous cycle? Training maxes will decrease.')) {
+    prevCycle();
+  }
+});
+
+// Settings: save TM
+document.getElementById('btn-save-tm').addEventListener('click', () => {
+  state.trainingMaxes.squat = parseInt(document.getElementById('tm-squat').value, 10) || state.trainingMaxes.squat;
+  state.trainingMaxes.bench = parseInt(document.getElementById('tm-bench').value, 10) || state.trainingMaxes.bench;
+  state.trainingMaxes.press = parseInt(document.getElementById('tm-press').value, 10) || state.trainingMaxes.press;
+  state.trainingMaxes.deadlift = parseInt(document.getElementById('tm-deadlift').value, 10) || state.trainingMaxes.deadlift;
+  saveState();
+  alert('Training maxes updated.');
+});
+
+// Settings: save schedule
+document.getElementById('btn-save-schedule').addEventListener('click', () => {
+  state.schedule = parseInt(document.getElementById('setting-schedule').value, 10);
+  saveState();
+  alert('Schedule updated.');
+});
+
+// Settings: reset lifts
+document.querySelectorAll('[data-reset]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lift = btn.dataset.reset;
+    if (confirm(`Reset ${LIFT_LABELS[lift]} training max to 90% of current (${state.trainingMaxes[lift]} → ${roundTo5(state.trainingMaxes[lift] * 0.9)})?`)) {
+      resetLift(lift);
+    }
+  });
+});
+
+// Reset all
+document.getElementById('btn-reset-all').addEventListener('click', () => {
+  if (confirm('This will erase all your data. Are you sure?')) {
+    localStorage.removeItem('531_state');
+    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    showScreen('setup-screen');
+  }
+});
+
+// ── Init ──
+(function init() {
+  // If we have training maxes, go straight to training
+  if (state.trainingMaxes.squat > 0) {
+    showScreen('training-screen');
+    showView('cycle');
+  }
+})();
+</script>
+</body>
+</html>
