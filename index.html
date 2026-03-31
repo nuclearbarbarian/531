@@ -830,6 +830,10 @@ function showView(name) {
 }
 
 function renderCycle() {
+  // Clamp currentWeek for schedules with fewer weeks (2-day has no deload)
+  const maxWeek = state.schedule === 2 ? 2 : 3;
+  if (state.currentWeek > maxWeek) state.currentWeek = 0;
+
   // Cycle label
   document.getElementById('cycle-label').textContent = 'Cycle ' + state.cycle;
 
@@ -839,9 +843,10 @@ function renderCycle() {
     `<span class="tm-item"><strong>${LIFT_SHORT[l]}</strong> ${state.trainingMaxes[l]}</span>`
   ).join('');
 
-  // Week tabs
+  // Week tabs (skip deload for 2-day schedule)
   const tabsEl = document.getElementById('week-tabs');
-  tabsEl.innerHTML = WEEK_SCHEMES.map((w, i) =>
+  const weeks = state.schedule === 2 ? WEEK_SCHEMES.slice(0, 3) : WEEK_SCHEMES;
+  tabsEl.innerHTML = weeks.map((w, i) =>
     `<button class="week-tab ${i === state.currentWeek ? 'active' : ''}" data-week="${i}">${w.tag}</button>`
   ).join('');
 
